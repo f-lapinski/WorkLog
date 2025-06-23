@@ -22,4 +22,9 @@
     <ProjectReference Include="..\WorkLog.Domain\WorkLog.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Application\" />
+    <Folder Include="Infrastructure\" />
+  </ItemGroup>
+
 </Project>
