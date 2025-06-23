@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using WorkLog.Data;
 
-namespace WorkLog
+namespace WorkLog.Web
 {
     public class Program
     {

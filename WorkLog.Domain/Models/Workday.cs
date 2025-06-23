@@ -2,25 +2,27 @@
 
 namespace WorkLog.Domain.Models;
 
-public class Workday : IValidatableObject
+public class Workday : AuditableEntity, IValidatableObject
 {
     public Guid Id { get; set; }
 
-    [Required(ErrorMessage = "Data i godzina rozpoczęcia jest wymagana")]
+    [Required(ErrorMessage = "Start Date and Time is required")]
     public DateTime StartDateTime { get; set; }
 
-    [Required(ErrorMessage = "Data i godzina zakończenia jest wymagana")]
+    [Required(ErrorMessage = "End Date and Time is required")]
     public DateTime EndDateTime { get; set; }
 
-    [StringLength(500, ErrorMessage = "Opis nie może przekraczać 500 znaków")]
+    [StringLength(500, ErrorMessage = "Description cannot exceed 500 characters")]
     public string Description { get; set; } = string.Empty;
+    
+    public TimeSpan? Duration => EndDateTime - StartDateTime;
 
     public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
     {
         if (EndDateTime <= StartDateTime)
         {
             yield return new ValidationResult(
-                "Data i godzina zakończenia musi być późniejsza niż data i godzina rozpoczęcia",
+                "Date and Time validation failed: End Date and Time must be after Start Date and Time.",
                 [nameof(StartDateTime), nameof(EndDateTime)]
             );
         }
