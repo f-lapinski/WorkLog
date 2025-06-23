@@ -18,4 +18,8 @@
     <Using Include="Xunit" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\WorkLog.Domain\WorkLog.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
