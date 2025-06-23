@@ -22,7 +22,7 @@ namespace WorkLog.Web
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             builder.Services.AddControllersWithViews();
 
-            // Add custom dependency injection for layers
+            // Add layers services
             builder.Services.AddApplication();
             builder.Services.AddInfrastructure();
 
