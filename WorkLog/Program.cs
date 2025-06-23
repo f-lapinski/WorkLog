@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using WorkLog.Application;
 using WorkLog.Data;
+using WorkLog.Infrastructure;
 
 namespace WorkLog.Web
 {
@@ -19,6 +21,10 @@ namespace WorkLog.Web
             builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             builder.Services.AddControllersWithViews();
+
+            // Add custom dependency injection for layers
+            builder.Services.AddApplication();
+            builder.Services.AddInfrastructure();
 
             var app = builder.Build();
 
