@@ -7,7 +7,6 @@ namespace WorkLog.Infrastructure;
 public class Context : IdentityDbContext<ApplicationUser>
 {
     public DbSet<Workday> WorkDays { get; set; }
-    public DbSet<ApplicationUser> ApplicationUsers { get; set; }
     
     public Context(DbContextOptions<Context> options) : base(options)
     {
