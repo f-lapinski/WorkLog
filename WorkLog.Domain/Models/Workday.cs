@@ -17,8 +17,8 @@ public class Workday : AuditableEntity, IValidatableObject
     
     public TimeSpan? Duration => EndDateTime - StartDateTime;
     
-    public string ApplicationUserId { get; set; }
-    public ApplicationUser ApplicationUser { get; set; }
+    public required string ApplicationUserId { get; set; }
+    public required ApplicationUser ApplicationUser { get; set; }
 
     public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
     {
