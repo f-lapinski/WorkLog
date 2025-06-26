@@ -1,7 +1,5 @@
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using WorkLog.Application;
-using WorkLog.Data;
 using WorkLog.Domain.Models;
 using WorkLog.Infrastructure;
 

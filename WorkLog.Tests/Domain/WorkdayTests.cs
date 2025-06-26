@@ -12,7 +12,9 @@ public class WorkdayTests
         {
             StartDateTime = DateTime.Now,
             EndDateTime = DateTime.Now.AddHours(-1),
-            Description = "Test"
+            Description = "Test",
+            ApplicationUserId = Guid.NewGuid().ToString(),
+            ApplicationUser = new ApplicationUser()
         };
 
         // Act
@@ -32,7 +34,9 @@ public class WorkdayTests
         {
             StartDateTime = DateTime.Now,
             EndDateTime = DateTime.Now.AddHours(8),
-            Description = "Test"
+            Description = "Test",
+            ApplicationUserId = Guid.NewGuid().ToString(),
+            ApplicationUser = new ApplicationUser()
         };
 
         // Act
@@ -51,7 +55,9 @@ public class WorkdayTests
         {
             StartDateTime = DateTime.Now,
             EndDateTime = DateTime.Now.AddHours(8),
-            Description = new string('x', 501) // 501 znaków
+            Description = new string('x', 501), // 501 znaków
+            ApplicationUserId = Guid.NewGuid().ToString(),
+            ApplicationUser = new ApplicationUser()
         };
 
         // Act & Assert
@@ -62,5 +68,41 @@ public class WorkdayTests
                 true
             )
         );
+    }
+    
+    [Fact]
+    public void ApplicationUser_WorkdayRelation_IsCorrectlyEstablished()
+    {
+        // Arrange
+        var user = new ApplicationUser 
+        { 
+            Id = Guid.NewGuid().ToString(),
+            UserName = "testuser@example.com"
+        };
+
+        var workday1 = new Workday
+        {
+            StartDateTime = DateTime.Now,
+            EndDateTime = DateTime.Now.AddHours(8),
+            Description = "Test workday 1",
+            ApplicationUserId = user.Id,
+            ApplicationUser = user
+        };
+
+        var workday2 = new Workday
+        {
+            StartDateTime = DateTime.Now.AddDays(1),
+            EndDateTime = DateTime.Now.AddDays(1).AddHours(8),
+            Description = "Test workday 2",
+            ApplicationUserId = user.Id,
+            ApplicationUser = user
+        };
+
+        user.Workdays = new List<Workday> { workday1, workday2 };
+
+        // Assert
+        Assert.Equal(2, user.Workdays.Count);
+        Assert.All(user.Workdays, w => Assert.Equal(user.Id, w.ApplicationUserId));
+        Assert.All(user.Workdays, w => Assert.Same(user, w.ApplicationUser));
     }
 }
